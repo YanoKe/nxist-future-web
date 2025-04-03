@@ -1,6 +1,6 @@
 <template>
     <div class="box">
-        <ul>一言：
+        <ul>
             <p>{{ poem || '正在加载...' }}</p>
         </ul>
     </div>
@@ -57,5 +57,7 @@ ul{
     left: 200px;
     top: 200px;
 }
-
+p{
+    color: #fff;
+}
 </style>
