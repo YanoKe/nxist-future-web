@@ -1,17 +1,26 @@
 <template>
-    <span class="app">
+
+    <div class="app" v-bind:class="{ 'hide-after': !showAfter }">
         <h1>该页面为实验性测试</h1>
-        <oneword/>
-    </span>
+        <oneword />
+    </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup >
 import oneword from './components/oneword.vue'
+import {ref,onMounted} from 'vue'
+defineOptions({
+    name: "word",
+})
 
-export default {
-    name: 'App',
-    components: { oneword }
-}
+const showAfter = ref(true)
+
+onMounted(() => {
+    setTimeout(() => {
+        showAfter.value = false
+    }, 1000)
+})
+
 </script>
 
 <style scoped >
@@ -19,12 +28,23 @@ export default {
     :root {
             font-size: 15px;
         }
+        .app.hide-after::after {
+            display: none !important;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+            
+        }
 
         h1{
             transform: scale(1);
             animation: 1.5s move ;
             transform: translateY(-40vh) scale(0.5);
             white-space: nowrap;
+            z-index: 1000;
         }
         @keyframes  move {
             from{
@@ -36,6 +56,8 @@ export default {
             
         }
         .app {
+            display: flex;
+            flex-direction: column;
             font-family: 'Quicksand', sans-serif;
             margin: 0;
             min-height: 100vh;
@@ -62,7 +84,7 @@ export default {
             animation: 10s movement linear infinite;
         }
     
-        /* .app::after {
+        .app::after {
             content: '';
             display: block;
             position: fixed;
@@ -72,9 +94,10 @@ export default {
             left: 0;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-        } */
-    
-        span {
+            transition: opacity 1s ;
+            z-index: 100;
+        }
+        div {
             position: relative;
             z-index: 10;
             display: flex;
@@ -82,7 +105,7 @@ export default {
             width: 100%;
             justify-content: center;
             align-items: center;
-            font-size: 5rem;
+            font-size: 6vw;
             color: transparent;
             text-shadow:
                 0px 0px 1px rgba(255, 255, 255, .6),

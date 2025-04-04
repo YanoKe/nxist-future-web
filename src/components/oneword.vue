@@ -1,8 +1,9 @@
 <template>
     <div class="box">
-        <ul>
-            <p>{{ poem || '正在加载...' }}</p>
-        </ul>
+        <div class="poem">
+            {{ poem || '正在加载...' }}
+        </div>
+        <div class="anthor">{{ anthor || '正在加载...' }}</div>
     </div>
 </template>
 
@@ -14,19 +15,23 @@ import axios from 'axios';
 defineOptions({
     name: 'oneword',
 })
-import {onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 
 
 const poem = ref('')
+const anthor = ref('')
 
 // 定义获取数据的函数
 const getData = async () => {
     try {
-        const response = await axios.get('https://v1.hitokoto.cn/')
+        const response = await axios.get('https://international.v1.hitokoto.cn/')
         poem.value = response.data.hitokoto
+        anthor.value = response.data.from
     } catch (error) {
         console.log('出错啦:', error)
         poem.value = '加载失败，稍后重试...'
+        anthor.value = '加载失败，稍后重试...'
+
     }
 }
 
@@ -34,30 +39,45 @@ const getData = async () => {
 let timer: number
 onMounted(() => {
     getData() // 立即获取第一次数据
-    timer = window.setInterval(getData, 5000) // 每5秒执行
+    timer = window.setInterval(getData, 20000) // 
 })
 
-// 组件卸载时清除定时器
-onUnmounted(() => {
-    clearInterval(timer)
-})
+// // 组件卸载时清除定时器
+// onUnmounted(() => {
+//     clearInterval(timer)
+// })
 
 </script>
 
 
-<style scoped >
+<style scoped>
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    position: relative;
+}
+.box{
+    position: absolute;
+}
 
-}
-ul{
-    position: fixed;
-    left: 200px;
-    top: 200px;
-}
-p{
+.poem {
+
     color: #fff;
+    font-size: 4vw;
+    position: absolute;
+    top: 20vh;
+    left: 5vw;
+}
+
+.anthor {
+    position: absolute;
+    right: 8vw;
+    top: 30vh;
+    font-size: 3vw;
+    margin: 66px;
+
+    
+
 }
 </style>
