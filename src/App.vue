@@ -114,7 +114,7 @@ onMounted(() => {
         }
     
         @keyframes movement {
-    
+
             0%,
             100% {
                 background-size:
