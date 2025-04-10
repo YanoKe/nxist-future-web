@@ -1,0 +1,61 @@
+:root{
+    --app-bg-attachment:fixed;
+    --app-bg-size:cover;
+}
+/* 默认字体大小（>1600px 时生效） */
+html {
+    font-size: 16px;
+}
+
+/* 大屏适配（1280px - 1600px） */
+@media only screen and (max-width: 1600px) and (min-width: 1281px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+/* 中屏适配（960px - 1280px） */
+@media only screen and (max-width: 1280px) and (min-width: 961px) {
+    html {
+        font-size: 12px;
+    }
+}
+/* 移动端适配（≤960px） */
+@media only screen and (max-width: 960px) {
+    html {
+        font-size: 10px;
+    }
+}
+
+.app-bg {
+    min-height: 100vh;
+    background-image: url(/images/background4.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #f0f2f5;
+    position: relative;
+    z-index: 1;
+
+    /* 添加背景遮罩 */
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.92);
+        /* 半透明白色遮罩 */
+        z-index: -1;
+    }
+}
+@media (max-width: 768px) {
+    .app-bg {
+        background-attachment: scroll;
+        /* 移动端取消固定背景 */
+        background-size: contain;
+        /* 小屏幕显示完整图片 */
+    }
+}

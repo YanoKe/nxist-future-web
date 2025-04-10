@@ -13,7 +13,7 @@ import { idText } from 'typescript';
 import { ref } from 'vue'
 import axios from 'axios';
 defineOptions({
-    name: 'oneword',
+    name: 'oneWord',
 })
 import { onMounted, onUnmounted } from 'vue'
 
@@ -51,33 +51,6 @@ onMounted(() => {
 
 
 <style scoped>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    position: relative;
-}
-.box{
-    position: absolute;
-}
 
-.poem {
 
-    color: #fff;
-    font-size: 4vw;
-    position: absolute;
-    top: 20vh;
-    left: 5vw;
-}
-
-.anthor {
-    position: absolute;
-    right: 8vw;
-    top: 30vh;
-    font-size: 3vw;
-    margin: 66px;
-
-    
-
-}
 </style>
