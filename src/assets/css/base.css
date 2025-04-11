@@ -1,11 +1,18 @@
 :root {
     --normal-font-size: 16px;
 }
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+} */
+/* 在全局样式文件中 */
+body {
+    margin: 0;
+    box-sizing: border-box;
+    /* 禁用页面级滚动 */
 }
+
 /* 默认字体大小（>1600px 时生效） */
 html{
     font-size: var(--normal-font-size);

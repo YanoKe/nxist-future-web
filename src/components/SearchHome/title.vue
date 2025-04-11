@@ -29,6 +29,9 @@ defineOptions({
     display: inline-block;
 
 }
+.text{
+    white-space: nowrap;
+}
 
 
 </style>

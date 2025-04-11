@@ -1,4 +1,19 @@
 //enum枚举
+export enum SearchType {
+    Title = "title",
+    ISBN = "isbn",
+    ID = "id",
+    Author = "author"
+}
+
+// 历史记录类型
+export interface SearchHistory {
+    type: SearchType
+    keyword: string
+    timestamp: number
+}
+
+
 //图书状态
 export enum BookStatus{
     Available = '可借阅',
