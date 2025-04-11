@@ -9,14 +9,10 @@ type ISBN10 = `${number}-${number}-${number}-${number}`
 type ISBN13 = `${number}-${number}-${number}-${number}-${number}`
 type ISBN = ISBN10 | ISBN13
 type BookPublishData = `${number}-${number}`
-
-
 type InternationalClassification =
     | { type: 'ISBN'; value: ISBN }
     | { type: 'ISSN'; value: string }
     | { type: '中图分类'; value:string}
-
-
 
 //图书详细类型
 //interface为接口

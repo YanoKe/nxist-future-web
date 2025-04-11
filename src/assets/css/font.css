@@ -1,0 +1,42 @@
+@font-face {
+    font-family: '程荣光刻楷';
+    src: url(/fonts/程荣光刻楷.ttf) format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'CooperZhengKai';
+    src: url(/fonts/CooperZhengKai.ttf) format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MiSans-normal';
+    src: url(fonts/MiSans.ttf) format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: '得意黑';
+    src: url(fonts/得意黑.ttf) format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: '优设鲨鱼菲特健康体';
+    src: url(fonts/优设鲨鱼菲特健康体.ttf) format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: '鸿雷行书简体';
+    src: url(fonts/鸿雷行书简体.otf) format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* 全局应用 */
+body {
+    font-family: 'MiSans-normal', sans-serif;
+}

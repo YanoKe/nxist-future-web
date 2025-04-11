@@ -1,28 +1,57 @@
 <template>
-    <div class="SearchHome">
-        <schoolLogo class="SearchHome-round" />
-        <schoolTitle class="SearchHome-title"/>
-    </div>
+    <el-container class="search-home">
+        <el-header class="header">
+            <div class="header-content">
+                <schoolLogo class="logo" />
+                <oneWord class="oneWord" />
+                <user class="user" />
+            </div>
+        </el-header>
+        <el-main class="main">
+            <schoolTitle class="title" />
+        </el-main>
+        <el-footer></el-footer>
+    </el-container>
 </template>
 
 <script lang="ts" setup>
 defineOptions({
     name: 'SearchHome',
 })
-import schoolLogo from '@/components/logo.vue'
-import schoolTitle from '@/components/title.vue'
+import schoolLogo from '@/components/SearchHome/logo.vue'
+import schoolTitle from '@/components/SearchHome/title.vue'
+import user from '@/components/SearchHome/user.vue'
+import oneWord from '@/components/SearchHome/oneWord.vue'
 </script>
 
 <style scoped>
-:root{
-    font-size: 12px;
+.search-home {
+    height: 100vh;
+    display: inline-flex;
+    flex-direction: column;
 }
-.SearchHome{
+
+.header {
+    height: auto;
+}
+.header-content {
     display: flex;
-    gap:1rem;
+    gap: 0.5rem;
+    align-items: center;
+    /* padding: 0 2rem; */
 }
-.SearchHome-title{
-
+.title {
+    font-family: 'CooperZhengKai';
+    font-size: 3em;
+    font-weight: 550;
 }
-
+.oneWord {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    gap: 0.5rem;
+}
+.main{
+    padding: 0;
+}
 </style>

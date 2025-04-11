@@ -1,12 +1,15 @@
-:root{
-    --app-bg-attachment:fixed;
-    --app-bg-size:cover;
+:root {
+    --normal-font-size: 16px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 /* 默认字体大小（>1600px 时生效） */
-html {
-    font-size: 16px;
+html{
+    font-size: var(--normal-font-size);
 }
-
 /* 大屏适配（1280px - 1600px） */
 @media only screen and (max-width: 1600px) and (min-width: 1281px) {
     html {
@@ -20,12 +23,22 @@ html {
         font-size: 12px;
     }
 }
+
 /* 移动端适配（≤960px） */
 @media only screen and (max-width: 960px) {
     html {
         font-size: 10px;
     }
 }
+
+@media (max-width: 768px) {
+    .app-bg {
+        background-attachment: scroll;
+        /* 移动端取消固定背景 */
+        background-size: contain;
+        /* 小屏幕显示完整图片 */
+    }
+} 
 
 .app-bg {
     min-height: 100vh;
@@ -51,11 +64,12 @@ html {
         z-index: -1;
     }
 }
-@media (max-width: 768px) {
-    .app-bg {
-        background-attachment: scroll;
-        /* 移动端取消固定背景 */
-        background-size: contain;
-        /* 小屏幕显示完整图片 */
-    }
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    padding: 1rem;
+    margin: 0 auto;
 }
+/* 全局字体 */

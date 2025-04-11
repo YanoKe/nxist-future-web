@@ -8,12 +8,7 @@ const router = createRouter({
             name: 'home',
             component: () => import('@/views/SearchHome.vue') // 使用懒加载
         },
-        {
-            path: '/detail/:id',
-            name: 'Detail',
-            component: () => import('@/views/DetailView.vue'),
-            props: true
-        }
+
     ]
 })
 

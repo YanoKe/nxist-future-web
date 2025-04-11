@@ -15,22 +15,7 @@ defineOptions({
 </script>
 
 <style scoped>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-
-
-.app-layout {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-    padding: 20px;
-    max-width: 1650px;
-    margin: 0 auto;
-}
 
 
 </style>
