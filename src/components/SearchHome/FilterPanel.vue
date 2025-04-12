@@ -74,14 +74,12 @@
                     <span class="selected-value">{{ selectedStatus || '全部' }}</span>
                 </template>
                 <el-radio-group v-model="selectedStatus">
-                    <el-radio :value="undefined">全部</el-radio>
+                    <el-radio value="undefined">全部</el-radio>
                     <el-radio v-for="status in Object.values(BookStatus)" :key="status" :value="status">
                         {{ status }}
                     </el-radio>
                 </el-radio-group>
             </el-collapse-item>
-
-            <!-- 在线预览 -->
             <el-collapse-item name="preview">
                 <template #title>
                     <h3>在线预览</h3>
@@ -204,7 +202,6 @@ const selectedTags = computed(() => {
             key: 'publish-year'
         })
     }
-
     if (selectedPublishers.value.length > 0) {
         tags.push(...selectedPublishers.value.map(pub => ({
             type: 'publisher',
@@ -212,7 +209,6 @@ const selectedTags = computed(() => {
             key: `pub-${pub}`
         })))
     }
-
     if (selectedStatus.value) {
         tags.push({
             type: 'status',
@@ -220,7 +216,6 @@ const selectedTags = computed(() => {
             key: `status-${selectedStatus.value}`
         })
     }
-
     if (hasPreview.value) {
         tags.push({
             type: 'preview',
@@ -228,13 +223,7 @@ const selectedTags = computed(() => {
             key: 'has-preview'
         })
     }
-    if (filterParams.value.publishYears.length > 0) {
-        tags.push({
-            type: 'publishYears',
-            label: `出版年: ${filterParams.value.publishYears.join(', ')}年`,
-            key: 'years-' + filterParams.value.publishYears.join('-')
-        })
-    }
+
 
     return tags
 })
@@ -311,9 +300,33 @@ const handleYearChange = () => {
 
 .selected-tags {
     padding: 10px 0;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    /* 改用 grid 布局 */
+    grid-template-columns: repeat(auto-fill, minmax(120px, max-content));
     gap: 8px;
+    align-items: start;
+    /* 防止垂直方向抖动 */
+}
+.el-tag {
+    flex-shrink: 0;
+    /* 禁止弹性收缩 */
+    min-width: 120px;
+    /* 设置最小宽度 */
+    transition: none !important;
+    /* 禁用默认动画 */
+    will-change: transform;
+    /* 启用GPU加速 */
+    transition: opacity 0.2s, transform 0.2s;
+}
+.el-tag-enter-active,
+.el-tag-leave-active {
+    transition: all 0.2s;
+}
+
+.el-tag-enter-from,
+.el-tag-leave-to {
+    opacity: 0;
+    transform: translateY(-5px);
 }
 
 .el-collapse-item {
@@ -337,5 +350,17 @@ const handleYearChange = () => {
     color: #909399;
     margin-left: auto;
     padding-left: 20px;
+}
+
+
+@media (max-width: 768px) {
+    .selected-tags {
+        grid-template-columns: 1fr;
+        /* 单列布局 */
+    }
+
+    .el-tag {
+        min-width: 100%;
+    }
 }
 </style>
