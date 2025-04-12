@@ -73,10 +73,10 @@
             <el-collapse-item name="status">
                 <template #title>
                     <h3>图书状态</h3>
-                    <span class="selected-value">{{ selectedStatus || '全部' }}</span>
+                    <span class="selected-value">{{ selectedStatusLabel }}</span>
                 </template>
                 <el-radio-group v-model="selectedStatus">
-                    <el-radio value="undefined">全部</el-radio>
+                    <el-radio :value="undefined">全部</el-radio>
                     <el-radio v-for="status in Object.values(BookStatus)" :key="status" :value="status">
                         {{ status }}
                     </el-radio>
@@ -104,7 +104,9 @@ const selectedStatus = ref<BookStatus | undefined>()
 const selectedLanguages = ref<string[]>([])
 const selectedPublishers = ref<string[]>([])
 const hasPreview = ref(false)
-
+const selectedStatusLabel = computed(() => {
+    return selectedStatus.value ? selectedStatus.value : '全部'
+})
 
 const props = defineProps<{
     books: Book[]
@@ -211,18 +213,19 @@ const selectedTags = computed(() => {
             key: `pub-${pub}`
         })))
     }
-    if (selectedStatus.value) {
-        tags.push({
-            type: 'status',
-            label: `状态: ${selectedStatus.value}`,
-            key: `status-${selectedStatus.value}`
-        })
-    }
+
     if (hasPreview.value) {
         tags.push({
             type: 'preview',
             label: '支持预览',
             key: 'has-preview'
+        })
+    }
+    if (selectedStatus.value !== undefined) { // 修改判断条件
+        tags.push({
+            type: 'status',
+            label: `状态: ${selectedStatus.value}`,
+            key: `status-${selectedStatus.value}`
         })
     }
 
