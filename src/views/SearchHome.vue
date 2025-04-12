@@ -15,7 +15,7 @@
                         <SearchBox @search="handleSearch" />
                     </div>
                     <el-container class="content-wrapper">
-                        <FilterPanel :books="filteredBooks" @filter-change="handleFilterChange" />
+                        <FilterPanel  :books="filteredBooks" @filter-change="handleFilterChange" />
                         <el-main class="result-area">
                             <!-- 图书展示组件 -->
                             <div class="book-list">
@@ -178,7 +178,6 @@ const scrollToTop = () => {
 
 <style scoped>
 .search-home {
-    /* height: 100vh; */
     display: flex;
     flex-direction: column;
 }
@@ -188,7 +187,9 @@ const scrollToTop = () => {
     gap: 0.5rem;
     align-items: center;
 }
-
+.main{
+    padding: 10px;
+}
 .title {
     font-family: 'CooperZhengKai';
     font-size: 3em;
@@ -199,7 +200,6 @@ const scrollToTop = () => {
 .oneWord {
     display: flex;
     justify-content: center;
-    width: 100vw;
     gap: 0.5rem;
 }
 
@@ -225,6 +225,7 @@ const scrollToTop = () => {
     z-index: 10000;
     
 }
+
 
 
 

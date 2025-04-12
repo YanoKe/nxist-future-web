@@ -5,7 +5,7 @@
             <el-button type="primary" link @click="resetAllFilters">重置所有条件</el-button>
         </div>
 
-        <transition-group name="tag-transition" tag="div" class="selected-tags" v-if="selectedTags.length > 0">
+        <transition-group name="tag-scale" tag="div" class="selected-tags" v-if="selectedTags.length > 0">
             <el-tag v-for="tag in selectedTags" :key="tag.key" closable @close="clearFilter(tag.type)"
                 class="filter-tag">
                 {{ tag.label }}
@@ -287,10 +287,9 @@ const handleYearChange = () => {
 
 <style scoped>
 .filter-panel {
-    padding: 15px;
+    padding: 5px 15px 15px 15px ;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
-    height: 100vh;
-    overflow-y: auto;
+    height: auto;
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
 }
@@ -300,21 +299,33 @@ const handleYearChange = () => {
     justify-content: space-between;
     align-items: center;
     padding: 0 8px;
-    margin-bottom: 16px;
 }
 
 /* 标签区域优化 */
 .selected-tags {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, max-content));
+    /* 固定列宽策略 */
+    grid-auto-columns: minmax(120px, max-content);
+    /* 防止列宽突变 */
     gap: 8px;
-    padding: 8px 0;
+    padding: 0 8px 8px 0;
     margin: 0 -4px;
 }
 
 .filter-tag {
     --tag-bg: rgba(255, 255, 255, 0.9);
     --tag-border: rgba(0, 0, 0, 0.1);
+
+    width: auto !important;
+    /* 取消固定宽度 */
+    min-width: 120px;
+    max-width: 240px;
+    /* 增加最大宽度限制 */
+    transform-origin: center center;
+    /* 优化缩放中心 */
+    will-change: transform, opacity;
+    /* 声明变化的属性 */
 
     width: 100%;
     min-width: 120px;
@@ -339,36 +350,46 @@ const handleYearChange = () => {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
-/* 标签动画优化 */
-.tag-transition-move {
-    transition: transform 0.4s ease;
-}
-
-.tag-transition-enter-active {
+.tag-scale-enter-active {
     transition:
-        opacity 0.3s ease-out,
-        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        opacity 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28),
+        transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    transform: scale(0.8);
 }
 
-.tag-transition-enter-from {
+.tag-scale-enter-from {
     opacity: 0;
-    transform: translateY(8px) scale(0.98);
+    transform: scale(0.8) translateY(8px);
 }
 
-.tag-transition-leave-active {
+.tag-scale-enter-to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* 优化离开动画 */
+.tag-scale-leave-active {
     transition:
-        opacity 0.2s ease-in,
-        transform 0.2s cubic-bezier(0.36, 0, 0.66, -0.56);
+        opacity 0.2s cubic-bezier(0.6, -0.3, 0.74, 0.05),
+        transform 0.2s cubic-bezier(0.6, -0.3, 0.74, 0.05);
     position: absolute;
-    width: calc(100% - 8px);
+    /* 保持绝对定位 */
+    z-index: -1;
+    /* 隐藏布局影响 */
 }
 
-.tag-transition-leave-to {
+.tag-scale-leave-to {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.8);
 }
 
+/* 优化移动动画 */
+.tag-scale-move {
+    transition:
+        transform 0.4s cubic-bezier(0.17, 0.84, 0.44, 1),
+        width 0s 0.4s;
+    /* 延迟宽度变化 */
+}
 /* 折叠面板优化 */
 .collapse-container {
     --collapse-bg: rgba(255, 255, 255, 0.6);
@@ -451,7 +472,8 @@ const handleYearChange = () => {
         padding: 0 12px;
     }
 }
-.selected-value{
+
+.selected-value {
     padding-left: 5px;
 }
 </style>

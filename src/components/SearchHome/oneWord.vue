@@ -5,10 +5,10 @@
                 <span class="poem">{{ processedPoem || loadingText }}</span>
                 <!-- 修改后模板 -->
                 <span class="author" v-if="!error && processedAuthor">
-                    {{ processedAuthor }}
+                    ——{{ processedAuthor }}
                 </span>
                 <span class="author" v-else-if="!error">
-                    {{ loadingText }}
+                    ——{{ loadingText }}
                 </span>
             </div>
         </div>
@@ -116,7 +116,7 @@ onUnmounted(() => {
 .poem-line {
     display: flex;
     align-items: baseline;
-    gap: 1rem;
+    gap: .5rem;
     flex-wrap: wrap;
     justify-content: center;
     background-color: rgba(255, 103, 0,.66);
@@ -132,13 +132,13 @@ onUnmounted(() => {
     white-space: nowrap;
 }
 
-.author::before {
+/* .author::before {
     content: "——";
     position: absolute;
     left: 0;
     color: #999;
     font-weight: 300;
-}
+} */
 
 .author {
     font-family: '得意黑';
