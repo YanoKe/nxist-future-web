@@ -219,6 +219,12 @@ const scrollToTop = () => {
     margin-top: 20px;
     justify-content: center;
 }
+.oneWord{
+    position: fixed;
+    top:.1rem;
+    z-index: 10000;
+    
+}
 
 
 

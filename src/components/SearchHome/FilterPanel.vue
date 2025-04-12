@@ -1,5 +1,5 @@
 <template>
-    <el-aside width="40rem" class="filter-panel">
+    <el-aside width="28rem" class="filter-panel">
         <div class="filter-header">
             <h2>筛选条件</h2>
             <el-button type="primary" link @click="resetAllFilters">重置所有条件</el-button>
@@ -286,7 +286,7 @@ const handleYearChange = () => {
 <style scoped>
 .filter-panel {
     padding: 20px;
-    border-right: 1px solid #ebeef5;
+    border-right: 5px solid #ddd;
     height: auto;
     overflow-y: auto;
 }
@@ -300,24 +300,34 @@ const handleYearChange = () => {
 
 .selected-tags {
     padding: 10px 0;
-    display: grid;
-    /* 改用 grid 布局 */
-    grid-template-columns: repeat(auto-fill, minmax(120px, max-content));
-    gap: 8px;
-    align-items: start;
-    /* 防止垂直方向抖动 */
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, fit-content(200px)));
+        /* 修改这里 */
+        gap: 8px;
+        align-items: start;
 }
+
 .el-tag {
-    flex-shrink: 0;
-    /* 禁止弹性收缩 */
+width: 100%;
+    /* 新增 */
     min-width: 120px;
-    /* 设置最小宽度 */
+    max-width: 320px;
+    /* 新增最大宽度限制 */
+    box-sizing: border-box;
+    overflow: hidden;
+    /* 防止内容溢出 */
+    text-overflow: ellipsis;
+    /* 添加省略号 */
+    white-space: nowrap;
+    /* 保持单行显示 */
+
+    /* 原有样式 */
+    flex-shrink: 0;
     transition: none !important;
-    /* 禁用默认动画 */
     will-change: transform;
-    /* 启用GPU加速 */
-    transition: opacity 0.2s, transform 0.2s;
+
 }
+
 .el-tag-enter-active,
 .el-tag-leave-active {
     transition: all 0.2s;

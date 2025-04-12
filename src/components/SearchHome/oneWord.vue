@@ -119,9 +119,10 @@ onUnmounted(() => {
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: red;
-    position: fixed;
-    z-index: 10000;
+    background-color: rgba(255, 103, 0,.3);
+    border-radius:25px;
+    padding: 0 10px;
+    
 }
 
 .poem {
