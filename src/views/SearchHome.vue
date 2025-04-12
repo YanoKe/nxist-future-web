@@ -205,8 +205,7 @@ const scrollToTop = () => {
 
 .main-content{
     padding: 0;
-    /* overflow:hidden; */
-
+    overflow:hidden;
 }
 
 .book-list {

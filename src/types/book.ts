@@ -44,8 +44,6 @@ export interface Book{
     livePreview: string//在线预览
     chineseClassification: string // 中图分类号
 }
-
-
 export interface FilterParams {
     classifications: string[]
     languages: string[]
