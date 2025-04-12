@@ -11,14 +11,11 @@
             <el-container>
                 <el-main class="main-content">
                     <schoolTitle class="title" />
-
                     <div class="search-wrapper">
                         <SearchBox @search="handleSearch" />
                     </div>
-
                     <el-container class="content-wrapper">
                         <FilterPanel :books="filteredBooks" @filter-change="handleFilterChange" />
-
                         <el-main class="result-area">
                             <!-- 图书展示组件 -->
                             <div class="book-list">
@@ -68,7 +65,9 @@ const currentFilter = ref<FilterParams>({
     classifications: [],
     languages: [],
     publishers: [],
-    hasPreview: false
+    hasPreview: false,
+    chineseClassification: '',
+    publishYears: []
 })
 
 // 分页状态
@@ -121,22 +120,40 @@ const checkSearchCondition = (book: Book) => {
             return true
     }
 }
+// 在SearchHome.vue的筛选条件检查中
 
 const checkFilterCondition = (book: Book) => {
-    const f = currentFilter.value
+    const filter = currentFilter.value
+
+    // 解析图书出版年份
+    const bookYear = parseInt(book.publishData.split('-')[0])
+
     return (
-        (f.classifications.length === 0 ||
-            f.classifications.includes(book.chineseClassification)) &&
-        (f.languages.length === 0 ||
-            f.languages.includes(book.language)) &&
-        (f.publishers.length === 0 ||
-            f.publishers.includes(book.publisher)) &&
-        (!f.publishYear ||
-            parseInt(book.publishData.split('-')[0]) === f.publishYear) &&
-        (!f.publishMonth ||
-            parseInt(book.publishData.split('-')[1]) === f.publishMonth) &&
-        (!f.status || book.status === f.status) &&
-        (!f.hasPreview || !!book.livePreview)
+        // 中图分类筛选
+        (filter.chineseClassification === 'ALL' ||
+            book.chineseClassification === filter.chineseClassification) &&
+
+        // 语种筛选
+        (filter.languages.length === 0 ||
+            filter.languages.includes(book.language)) &&
+
+        // 出版社筛选
+        (filter.publishers.length === 0 ||
+            filter.publishers.includes(book.publisher)) &&
+
+        // 出版年份筛选（多选逻辑）
+        (filter.publishYears.length === 0 ||
+            filter.publishYears.includes(bookYear)) &&
+
+        // 出版月份筛选（可选）
+        (!filter.publishMonth ||
+            parseInt(book.publishData.split('-')[1]) === filter.publishMonth) &&
+
+        // 图书状态筛选
+        (!filter.status || book.status === filter.status) &&
+
+        // 在线预览筛选
+        (!filter.hasPreview || !!book.livePreview)
     )
 }
 
@@ -186,10 +203,10 @@ const scrollToTop = () => {
     gap: 0.5rem;
 }
 
-.main {
+.main-content{
     padding: 0;
-    overflow:hidden;
-    /* height: 100vw; */
+    /* overflow:hidden; */
+
 }
 
 .book-list {

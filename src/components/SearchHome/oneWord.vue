@@ -4,10 +4,10 @@
             <div class="poem-line">
                 <span class="poem">{{ processedPoem || loadingText }}</span>
                 <!-- 修改后模板 -->
-                <span class="author" v-if="!error && processedAuthor" >
+                <span class="author" v-if="!error && processedAuthor">
                     {{ processedAuthor }}
                 </span>
-                <span class="author" v-else-if="!error" >
+                <span class="author" v-else-if="!error">
                     {{ loadingText }}
                 </span>
             </div>
@@ -76,10 +76,10 @@ const getData = async (isRetry = false): Promise<void> => {
 
 // 错误处理
 const handleError = (err: unknown) => {
-        rawPoem.value = '永远相信美好的事情即将发生'
-        rawAuthor.value = ''
-        error.value = ' ' 
-    }
+    rawPoem.value = '永远相信美好的事情即将发生'
+    rawAuthor.value = ''
+    error.value = ' '
+}
 
 
 // 定时器管理
@@ -102,6 +102,7 @@ onUnmounted(() => {
     margin-top: 0.5rem;
     text-align: center;
 }
+
 .box {
     width: 100%;
     padding: 1rem 0;
@@ -118,6 +119,9 @@ onUnmounted(() => {
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
+    background-color: red;
+    position: fixed;
+    z-index: 10000;
 }
 
 .poem {
@@ -126,6 +130,7 @@ onUnmounted(() => {
     line-height: 1.4;
     white-space: nowrap;
 }
+
 .author::before {
     content: "——";
     position: absolute;
@@ -133,6 +138,7 @@ onUnmounted(() => {
     color: #999;
     font-weight: 300;
 }
+
 .author {
     font-family: '得意黑';
     font-size: 1.6rem;
@@ -141,6 +147,7 @@ onUnmounted(() => {
     position: relative;
     padding-left: 2.5rem;
 }
+
 @media (max-width: 768px) {
     .content-wrapper {
         max-width: 95%;

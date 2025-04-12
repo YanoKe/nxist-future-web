@@ -173,6 +173,8 @@ const handleInputBlur = () => {
     right: 0;
     margin-top: 8px;
     z-index: 2000;
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
 .history-item {
@@ -181,6 +183,7 @@ const handleInputBlur = () => {
     align-items: center;
     padding: 8px 12px;
     transition: background-color 0.2s;
+    min-height: 36px;   /* 保证最小高度 */
 }
 
 .history-item:hover {

@@ -27,7 +27,6 @@ type BookPublishData = `${number}-${number}`
 type InternationalClassification =
     | { type: 'ISBN'; value: ISBN }
     | { type: 'ISSN'; value: string }
-    | { type: '中图分类'; value:string}
 
 //图书详细类型
 //interface为接口
@@ -50,11 +49,12 @@ export interface Book{
 export interface FilterParams {
     classifications: string[]
     languages: string[]
-    publishYear?: number
+    publishYears: number[]
     publishMonth?: number
     publishers: string[]
     status?: BookStatus
     hasPreview: boolean
+    chineseClassification: string
 }
 
 //API响应格式
