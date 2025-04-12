@@ -20,7 +20,7 @@
                     <span class="selected-value">{{ selectedClassificationName }}</span>
                 </template>
                 <el-radio-group v-model="filterParams.chineseClassification">
-                    <el-radio v-for="item in CLASSIFICATIONS" :key="item.code" :label="item.code">
+                    <el-radio v-for="item in CLASSIFICATIONS" :key="item.code" :value="item.code">
                         <strong>{{ item.code }}</strong> - {{ item.name }}
                     </el-radio>
                 </el-radio-group>
@@ -74,8 +74,8 @@
                     <span class="selected-value">{{ selectedStatus || '全部' }}</span>
                 </template>
                 <el-radio-group v-model="selectedStatus">
-                    <el-radio :label="undefined">全部</el-radio>
-                    <el-radio v-for="status in Object.values(BookStatus)" :key="status" :label="status">
+                    <el-radio :value="undefined">全部</el-radio>
+                    <el-radio v-for="status in Object.values(BookStatus)" :key="status" :value="status">
                         {{ status }}
                     </el-radio>
                 </el-radio-group>
