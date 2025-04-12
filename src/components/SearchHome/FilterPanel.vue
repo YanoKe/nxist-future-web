@@ -5,22 +5,24 @@
             <el-button type="primary" link @click="resetAllFilters">重置所有条件</el-button>
         </div>
 
-        <!-- 已选标签展示 -->
-        <div class="selected-tags" v-if="selectedTags.length > 0">
-            <el-tag v-for="tag in selectedTags" :key="tag.key" closable @close="clearFilter(tag.type)">
+        <transition-group name="tag-transition" tag="div" class="selected-tags" v-if="selectedTags.length > 0">
+            <el-tag v-for="tag in selectedTags" :key="tag.key" closable @close="clearFilter(tag.type)"
+                class="filter-tag">
                 {{ tag.label }}
             </el-tag>
-        </div>
+        </transition-group>
 
-        <el-collapse v-model="activeCollapse">
+        <!-- 折叠面板 -->
+        <el-collapse v-model="activeCollapse" class="collapse-container">
             <!-- 中图分类 -->
-            <el-collapse-item name="classification">
+            <el-collapse-item name="classification" class="collapse-item">
                 <template #title>
                     <h3>中图分类</h3>
                     <span class="selected-value">{{ selectedClassificationName }}</span>
                 </template>
-                <el-radio-group v-model="filterParams.chineseClassification">
-                    <el-radio v-for="item in CLASSIFICATIONS" :key="item.code" :value="item.code">
+                <el-radio-group v-model="filterParams.chineseClassification" class="classification-group">
+                    <el-radio v-for="item in CLASSIFICATIONS" :key="item.code" :value="item.code"
+                        class="classification-item">
                         <strong>{{ item.code }}</strong> - {{ item.name }}
                     </el-radio>
                 </el-radio-group>
@@ -285,92 +287,171 @@ const handleYearChange = () => {
 
 <style scoped>
 .filter-panel {
-    padding: 20px;
-    border-right: 5px solid #ddd;
-    height: auto;
+    padding: 15px;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    height: 100vh;
     overflow-y: auto;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
 }
 
 .filter-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 8px;
     margin-bottom: 16px;
 }
 
+/* 标签区域优化 */
 .selected-tags {
-    padding: 10px 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(120px, fit-content(200px)));
-        /* 修改这里 */
-        gap: 8px;
-        align-items: start;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+    padding: 8px 0;
+    margin: 0 -4px;
 }
 
-.el-tag {
-width: 100%;
-    /* 新增 */
+.filter-tag {
+    --tag-bg: rgba(255, 255, 255, 0.9);
+    --tag-border: rgba(0, 0, 0, 0.1);
+
+    width: 100%;
     min-width: 120px;
-    max-width: 320px;
-    /* 新增最大宽度限制 */
-    box-sizing: border-box;
-    overflow: hidden;
-    /* 防止内容溢出 */
-    text-overflow: ellipsis;
-    /* 添加省略号 */
-    white-space: nowrap;
-    /* 保持单行显示 */
-
-    /* 原有样式 */
-    flex-shrink: 0;
-    transition: none !important;
-    will-change: transform;
-
+    max-width: 100%;
+    height: auto;
+    min-height: 32px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    white-space: normal;
+    line-height: 1.4;
+    overflow: visible;
 }
 
-.el-tag-enter-active,
-.el-tag-leave-active {
-    transition: all 0.2s;
+.filter-tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.el-tag-enter-from,
-.el-tag-leave-to {
+/* 标签动画优化 */
+.tag-transition-move {
+    transition: transform 0.4s ease;
+}
+
+.tag-transition-enter-active {
+    transition:
+        opacity 0.3s ease-out,
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tag-transition-enter-from {
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translateY(8px) scale(0.98);
 }
 
-.el-collapse-item {
-    margin-bottom: 16px;
-    border-bottom: 1px solid #ebeef5;
+.tag-transition-leave-active {
+    transition:
+        opacity 0.2s ease-in,
+        transform 0.2s cubic-bezier(0.36, 0, 0.66, -0.56);
+    position: absolute;
+    width: calc(100% - 8px);
 }
 
-.date-filters {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.tag-transition-leave-to {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+/* 折叠面板优化 */
+.collapse-container {
+    --collapse-bg: rgba(255, 255, 255, 0.6);
+    --collapse-radius: 12px;
+
+    border: none;
+    background: transparent;
+}
+
+.collapse-item {
+    background: var(--collapse-bg);
+    border-radius: var(--collapse-radius);
+    margin-bottom: 8px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.collapse-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 :deep(.el-collapse-item__header) {
-    font-size: 14px;
-    color: #303133;
+    height: 48px;
+    padding: 0 10px 0 10px;
+    border-bottom: none !important;
+    font-size: 13px;
+    color: #333;
 }
 
-.selected-value {
-    font-size: 12px;
-    color: #909399;
-    margin-left: auto;
-    padding-left: 20px;
+:deep(.el-collapse-item__content) {
+    padding: 10px;
+    background: transparent !important;
 }
 
+/* 分类选项优化 */
+.classification-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 8px;
+}
 
+.classification-item {
+    margin: 0 !important;
+    padding: 0 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: background 0.3s;
+}
+
+.classification-item:hover {
+    background: rgba(245, 247, 250, 0.9);
+}
+
+:deep(.classification-item .el-radio__label) {
+    white-space: normal;
+    line-height: 1.4;
+}
+
+/* 响应式优化 */
 @media (max-width: 768px) {
+    .filter-panel {
+        width: 100% !important;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
     .selected-tags {
         grid-template-columns: 1fr;
-        /* 单列布局 */
     }
 
-    .el-tag {
-        min-width: 100%;
+    .classification-group {
+        grid-template-columns: 1fr;
     }
+
+    :deep(.el-collapse-item__header) {
+        height: 40px;
+        padding: 0 12px;
+    }
+}
+.selected-value{
+    padding-left: 5px;
 }
 </style>

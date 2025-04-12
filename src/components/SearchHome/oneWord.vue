@@ -119,7 +119,7 @@ onUnmounted(() => {
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: rgba(255, 103, 0,.3);
+    background-color: rgba(255, 103, 0,.66);
     border-radius:25px;
     padding: 0 10px;
     
