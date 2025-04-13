@@ -105,7 +105,7 @@ onUnmounted(() => {
 
 .box {
     width: 100%;
-    padding: 1rem 0;
+    padding: .8rem 0;
 }
 
 .content-wrapper {
@@ -116,13 +116,13 @@ onUnmounted(() => {
 .poem-line {
     display: flex;
     align-items: baseline;
-    gap: .5rem;
     flex-wrap: wrap;
     justify-content: center;
     border-radius: 35px;
-    background-color: #f9c5c5;
-    box-shadow: 2px 2px 20px rgba(255, 255, 255, .88);
     padding: 0 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(6px);
 
 }
 
@@ -147,7 +147,7 @@ onUnmounted(() => {
     color: #666;
     white-space: nowrap;
     position: relative;
-    padding-left: 2.5rem;
+    padding-left: .5rem;
 }
 
 @media (max-width: 768px) {

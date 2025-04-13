@@ -31,6 +31,7 @@ type InternationalClassification =
 //图书详细类型
 //interface为接口
 export interface Book{
+    isbn: any
     id: number
     title: string
     author: string

@@ -17,11 +17,7 @@
                     <el-container class="content-wrapper">
                         <FilterPanel :books="filteredBooks" @filter-change="handleFilterChange" />
                         <el-main class="result-area">
-                            <!-- 图书展示组件 -->
-                            <div class="book-list">
-                                <BookList v-for="book in pagedBooks" :key="book.id" :book="book" />
-                            </div>
-
+                            <BookList :filtered-books="pagedBooks" />
                             <!-- 分页控件 -->
                             <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
                                 :total="filteredBooks.length" :page-sizes="[10, 20, 50, 100]"
@@ -34,7 +30,9 @@
 
 
         </el-main>
-        <el-footer></el-footer>
+        <el-footer>
+            <test />
+        </el-footer>
     </el-container>
 
 </template>
@@ -43,14 +41,14 @@
 defineOptions({
     name: 'SearchHome',
 })
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import schoolLogo from '@/components/SearchHome/logo.vue'
 import schoolTitle from '@/components/SearchHome/title.vue'
 import user from '@/components/SearchHome/user.vue'
 import oneWord from '@/components/SearchHome/oneWord.vue'
 import SearchBox from '@/components/SearchHome/SearchBox.vue'
 
-
+import { mockBooks } from '@/mock/books'
 import FilterPanel from '@/components/SearchHome/FilterPanel.vue'
 import BookList from '@/components/SearchHome/BookList.vue'
 import type { Book, FilterParams } from '@/types/book'
@@ -60,6 +58,11 @@ const searchType = ref<SearchType>(SearchType.Title)
 
 // 搜索和筛选状态
 const rawBooks = ref<Book[]>([]) // 从API获取的原始数据
+onMounted(() => {
+    rawBooks.value = mockBooks
+})
+
+
 const searchKeyword = ref('')
 const currentFilter = ref<FilterParams>({
     classifications: [],
@@ -180,6 +183,7 @@ const scrollToTop = () => {
 .search-home {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .header-content {
@@ -189,7 +193,7 @@ const scrollToTop = () => {
 }
 
 .main {
-    padding: 10px;
+    padding: 0px;
 }
 
 .title {
@@ -199,11 +203,7 @@ const scrollToTop = () => {
     padding-top: 0.1rem;
 }
 
-.oneWord {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-}
+
 
 .main-content {
     padding: 0;
@@ -223,16 +223,14 @@ const scrollToTop = () => {
 }
 
 .oneWord {
+    display: flex;
+    justify-content: center;
+    z-index: 2000;
     position: fixed;
-    top: 0.1rem;
     left: 50%;
     transform: translateX(-50%) translateY(-100%);
     animation: slideIn .6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    z-index: 10000;
-    animation-delay: 0.3s;
-    /* 可选延迟让其他内容先加载 */
     will-change: transform;
-    /* 优化动画性能 */
     animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -243,6 +241,17 @@ const scrollToTop = () => {
 }
 
 .logo {
-    padding-top: 5px;
+    padding-top: 2px;
+}
+
+.result-area {
+    padding: 24px;
+    max-width: 1600px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.header {
+    height: auto;
 }
 </style>

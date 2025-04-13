@@ -18,7 +18,7 @@ img {
 }
 
 .logo>img {
-    width: 6rem;
+    width: 5rem;
     height: auto;
     display: inline-block;
 
