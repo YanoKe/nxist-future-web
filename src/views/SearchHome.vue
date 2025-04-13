@@ -15,11 +15,11 @@
                         <SearchBox @search="handleSearch" />
                     </div>
                     <el-container class="content-wrapper">
-                        <FilterPanel  :books="filteredBooks" @filter-change="handleFilterChange" />
+                        <FilterPanel :books="filteredBooks" @filter-change="handleFilterChange" />
                         <el-main class="result-area">
                             <!-- 图书展示组件 -->
                             <div class="book-list">
-                                <BookItem v-for="book in pagedBooks" :key="book.id" :book="book" />
+                                <BookList v-for="book in pagedBooks" :key="book.id" :book="book" />
                             </div>
 
                             <!-- 分页控件 -->
@@ -43,7 +43,7 @@
 defineOptions({
     name: 'SearchHome',
 })
-import { ref ,computed} from 'vue'
+import { ref, computed } from 'vue'
 import schoolLogo from '@/components/SearchHome/logo.vue'
 import schoolTitle from '@/components/SearchHome/title.vue'
 import user from '@/components/SearchHome/user.vue'
@@ -52,7 +52,7 @@ import SearchBox from '@/components/SearchHome/SearchBox.vue'
 
 
 import FilterPanel from '@/components/SearchHome/FilterPanel.vue'
-import BookItem from '@/components/SearchHome/BookItem.vue'
+import BookList from '@/components/SearchHome/BookList.vue'
 import type { Book, FilterParams } from '@/types/book'
 import { SearchType } from '@/types/book'
 
@@ -187,9 +187,11 @@ const scrollToTop = () => {
     gap: 0.5rem;
     align-items: center;
 }
-.main{
+
+.main {
     padding: 10px;
 }
+
 .title {
     font-family: 'CooperZhengKai';
     font-size: 3em;
@@ -203,9 +205,9 @@ const scrollToTop = () => {
     gap: 0.5rem;
 }
 
-.main-content{
+.main-content {
     padding: 0;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .book-list {
@@ -219,14 +221,28 @@ const scrollToTop = () => {
     margin-top: 20px;
     justify-content: center;
 }
-.oneWord{
+
+.oneWord {
     position: fixed;
-    top:.1rem;
+    top: 0.1rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    animation: slideIn .6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     z-index: 10000;
-    
+    animation-delay: 0.3s;
+    /* 可选延迟让其他内容先加载 */
+    will-change: transform;
+    /* 优化动画性能 */
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+@keyframes slideIn {
+    to {
+        transform: translateX(-50%) translateY(0);
+    }
+}
 
-
-
+.logo {
+    padding-top: 5px;
+}
 </style>

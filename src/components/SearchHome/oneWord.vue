@@ -119,10 +119,11 @@ onUnmounted(() => {
     gap: .5rem;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: rgba(255, 103, 0,.66);
-    border-radius:25px;
+    border-radius: 35px;
+    background-color: #f9c5c5;
+    box-shadow: 2px 2px 20px rgba(255, 255, 255, .88);
     padding: 0 10px;
-    
+
 }
 
 .poem {

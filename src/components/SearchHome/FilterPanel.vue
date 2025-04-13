@@ -29,7 +29,7 @@
             </el-collapse-item>
 
             <!-- 语种 -->
-            <el-collapse-item name="language">
+            <el-collapse-item name="language" class="collapse-item">
                 <template #title>
                     <h3>语种</h3>
                     <span class="selected-value">{{ selectedLanguages.join(', ') || '全部' }}</span>
@@ -40,7 +40,7 @@
             </el-collapse-item>
 
             <!-- 出版日期 -->
-            <el-collapse-item name="publishData">
+            <el-collapse-item name="publishData" class="collapse-item">
                 <template #title>
                     <h3>出版日期</h3>
                     <span class="selected-value">{{ selectedDateText }}</span>
@@ -58,7 +58,7 @@
             </el-collapse-item>
 
             <!-- 出版社 -->
-            <el-collapse-item name="publisher">
+            <el-collapse-item name="publisher" class="collapse-item">
                 <template #title>
                     <h3>出版社</h3>
                     <span class="selected-value">{{ selectedPublishers.join(', ') || '全部' }}</span>
@@ -70,7 +70,7 @@
             </el-collapse-item>
 
             <!-- 图书状态 -->
-            <el-collapse-item name="status">
+            <el-collapse-item name="status" class="collapse-item">
                 <template #title>
                     <h3>图书状态</h3>
                     <span class="selected-value">{{ selectedStatusLabel }}</span>
@@ -82,7 +82,7 @@
                     </el-radio>
                 </el-radio-group>
             </el-collapse-item>
-            <el-collapse-item name="preview">
+            <el-collapse-item name="preview" class="collapse-item">
                 <template #title>
                     <h3>在线预览</h3>
                     <span class="selected-value">{{ hasPreview ? '已选' : '全部' }}</span>
