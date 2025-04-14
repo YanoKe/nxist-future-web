@@ -20,12 +20,17 @@
                     <el-container class="content-wrapper">
                         <FilterPanel :books="filteredBooks" @filter-change="handleFilterChange" />
                         <el-main class="result-area">
-                            <BookList :filtered-books="filteredBooks" />
+                            <BookList :filtered-books="pagedBooks" />
                             <!-- 分页控件 -->
-                            <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
-                                :total="filteredBooks.length" :page-sizes="[10, 20, 50, 100]"
-                                layout="total, sizes, prev, pager, next, jumper" @current-change="handlePageChange"
-                                @size-change="handleSizeChange" />
+                            <el-pagination 
+                                v-model:current-page="currentPage" 
+                                v-model:page-size="pageSize"
+                                :total="filteredBooks.length" 
+                                :page-sizes="[10, 20, 50, 100]"
+                                layout="total, sizes, prev, pager, next, jumper" 
+                                @current-change="handlePageChange"
+                                @size-change="handleSizeChange" 
+                            />
                         </el-main>
                     </el-container>
                 </el-main>
@@ -80,7 +85,12 @@ const currentFilter = ref<FilterParams>({
 // 分页状态
 const currentPage = ref(1)
 const pageSize = ref(20)
-// 在分页状态声明下方添加
+// 新增分页数据计算属性
+const pagedBooks = computed(() => {
+    const start = (currentPage.value - 1) * pageSize.value
+    return filteredBooks.value.slice(start, start + pageSize.value)
+})
+
 const handleFilterChange = (params: FilterParams) => {
     currentFilter.value = params;
     currentPage.value = 1; // 重置分页状态
@@ -98,20 +108,15 @@ const handleSearch = (keyword: string, type: SearchType) => {
 };
 // 综合筛选
 const filteredBooks = computed(() => {
-    if (!searchKeyword.value.trim()) {
-        return rawBooks.value; // 如果搜索关键词为空，返回所有书籍
-    }
+
+    // 统一应用搜索和筛选条件
     return rawBooks.value.filter(book => {
         const matchesSearch = checkSearchCondition(book);
         const matchesFilter = checkFilterCondition(book);
         return matchesSearch && matchesFilter;
     });
 });
-// 分页数据
-const pagedBooks = computed(() => {
-    const start = (currentPage.value - 1) * pageSize.value
-    return filteredBooks.value.slice(start, start + pageSize.value)
-})
+
 const checkSearchCondition = (book: Book) => {
     const val = searchKeyword.value.trim().toLowerCase();
     console.log('检查书籍:', book.title, '关键词:', val);
@@ -317,7 +322,7 @@ function emit(arg0: string, arg1: string, value: SearchType) {
 }
 .content-wrapper{
     margin-left: 5px;
-    height: 80vh;
+    height: auto;
 }
 
 /* 初始动画 */
