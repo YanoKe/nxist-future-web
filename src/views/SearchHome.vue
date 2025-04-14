@@ -286,6 +286,10 @@ function emit(arg0: string, arg1: string, value: SearchType) {
     max-width: 1600px;
     margin: 0 auto;
     height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px; /* 新增内边距 */
 }
 
 .header {

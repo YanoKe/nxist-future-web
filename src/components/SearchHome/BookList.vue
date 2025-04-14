@@ -93,9 +93,10 @@ const showDetail = (book: Book) => {
 }
 
 .book-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(8px);
     transition: transform 0.3s ease;
     cursor: pointer;
     overflow: hidden;

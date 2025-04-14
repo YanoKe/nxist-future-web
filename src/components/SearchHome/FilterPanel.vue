@@ -293,8 +293,8 @@ const handleYearChange = () => {
     padding: 5px 15px 15px 15px ;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
     height: 100%;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
     border-radius: 10px;
 }
 
