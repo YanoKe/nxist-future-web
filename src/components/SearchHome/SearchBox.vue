@@ -5,29 +5,33 @@
         </el-select>
 
         <el-input v-model="searchKeyword" class="search-input" :placeholder="searchPlaceholder"
-            @focus="showHistory = true" @blur="handleInputBlur" @keyup.enter="handleSearch">
+            @focus="showHistory = true" @blur="handleInputBlur" @input="handleInput" @keyup.enter="handleSearch">
             <template #append>
                 <el-button type="primary" icon="Search" @click="handleSearch" />
             </template>
         </el-input>
-        <el-card v-show="showHistory && searchHistory.length > 0" class="history-dropdown" shadow="always">
+        <el-card v-show="showHistory && searchHistory.length > 0" class="history-dropdown" shadow="always"
+            @mousedown.prevent>
             <div v-for="(history, index) in searchHistory" :key="index" class="history-item">
                 <span class="history-content" @click="applyHistory(history)">
                     <el-tag size="small">{{ getTypeLabel(history.type) }}</el-tag>
                     <span class="keyword">{{ history.keyword }}</span>
                     <span class="time">{{ formatTime(history.timestamp) }}</span>
                 </span>
-                <el-button type="danger" link icon="Delete" class="delete-btn"  @mousedown.prevent="deleteHistory(index)" />
+                <el-button type="danger" link icon="Delete" class="delete-btn"
+                    @mousedown.prevent="deleteHistory(index)" />
             </div>
         </el-card>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watchEffect } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { SearchType, type SearchHistory } from '@/types/book'
 import { ElMessage } from 'element-plus'
-
+const emit = defineEmits<{
+    (e: 'search', keyword: string, type: SearchType): void
+}>()
 // 搜索类型选项
 const searchTypeOptions = [
     { value: SearchType.Title, label: '书名' },
@@ -65,7 +69,7 @@ const loadHistory = () => {
 
     try {
         const parsed = JSON.parse(saved)
-        if (Array.isArray(parsed) ){
+        if (Array.isArray(parsed)) {
             searchHistory.value = parsed
                 .filter(item => isValidHistory(item))
                 .slice(0, 10)
@@ -91,29 +95,38 @@ const handleSearchTypeChange = (newType: SearchType) => {
 
 // 执行搜索
 const handleSearch = () => {
-    const keyword = searchKeyword.value.trim()
-    if (!keyword) return
-
-    addToHistory({
-        type: searchType.value,
-        keyword,
-        timestamp: Date.now()
-    })
-
-    // TODO: 实际搜索逻辑
-    console.log('Searching:', searchType.value, keyword)
-}
-
+    const keyword = searchKeyword.value.trim();
+    // 仅当有实际搜索值时进行记录和搜索
+    if (keyword) {
+        const history: SearchHistory = {
+            type: searchType.value,
+            keyword: keyword,
+            timestamp: Date.now()
+        };
+        addToHistory(history);
+        emit('search', keyword, searchType.value);
+    } else {
+        // 清空搜索时仅触发事件不记录历史
+        emit('search', '', searchType.value);
+    }
+};
+// 监听输入框的 input 事件
+const handleInput = () => {
+    if (searchKeyword.value.trim() === '') {
+        // 如果输入框为空，触发无搜索值的搜索逻辑
+        emit('search', '', searchType.value);
+    } else {
+        // 正常搜索逻辑
+        emit('search', searchKeyword.value.trim(), searchType.value);
+    }
+};
 // 添加历史记录
 const addToHistory = (history: SearchHistory) => {
-    // 去重检查
-    const exists = searchHistory.value.some(
-        h => h.type === history.type && h.keyword === history.keyword
-    )
-
-    if (!exists) {
-        searchHistory.value = [history, ...searchHistory.value].slice(0, 10)
+    if (!searchHistory.value.some(h => h.type === history.type && h.keyword === history.keyword)) {
+        searchHistory.value = [history, ...searchHistory.value.slice(0, 9)]
         saveHistory()
+        // 强制触发数组更新
+        searchHistory.value = [...searchHistory.value]
     }
 }
 
@@ -148,10 +161,11 @@ const getTypeLabel = (type: SearchType) => {
 // 处理输入框失焦
 const handleInputBlur = () => {
     setTimeout(() => {
-        showHistory.value = false
-    }, 200)
-}
-
+        // 使用更可靠的可见性判断
+        const dropdown = document.querySelector('.history-dropdown') as HTMLElement;
+        showHistory.value = dropdown?.matches(':hover') ?? false;
+    }, 200);
+};
 
 </script>
 
@@ -185,7 +199,8 @@ const handleInputBlur = () => {
     align-items: center;
     padding: 8px 12px;
     transition: background-color 0.2s;
-    min-height: 36px;   /* 保证最小高度 */
+    min-height: 36px;
+    /* 保证最小高度 */
 }
 
 .history-item:hover {

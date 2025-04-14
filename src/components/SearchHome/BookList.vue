@@ -3,7 +3,8 @@
         <div class="book-grid">
             <div v-for="book in filteredBooks" :key="book.id" class="book-card" @click="showDetail(book)">
                 <div class="book-cover">
-                    <img :src="book.cover" :alt="book.title" />
+                    <img :src="book.cover" />
+                    <div class="bookID">{{ `图书ID：${book.id}` }}</div>
                     <div class="status-badge" :class="book.status === BookStatus.Available ? 'available' : 'borrowed'">
                         {{ book.status }}
                     </div>
@@ -20,7 +21,7 @@
         </div>
 
         <!-- 图书详情弹窗 -->
-        <el-dialog v-model="detailVisible" :show-close="false" width="80%" top="10vh" custom-class="book-detail-modal" >
+        <el-dialog v-model="detailVisible" :show-close="false" width="80%" top="10vh" custom-class="book-detail-modal">
             <div class="detail-container">
                 <div class="cover-column">
                     <img :src="currentBook.cover" class="detail-cover" />
@@ -133,7 +134,15 @@ const showDetail = (book: Book) => {
         background: var(--el-color-danger);
     }
 }
-
+.bookID{
+    position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        color: black;
+}
 .book-info {
     padding: 16px;
 

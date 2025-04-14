@@ -20,11 +20,7 @@
                     <el-container class="content-wrapper">
                         <FilterPanel :books="filteredBooks" @filter-change="handleFilterChange" />
                         <el-main class="result-area">
-                            <div class="debug-info">
-                                当前搜索：{{ searchKeyword }} ({{ searchType }})
-                                筛选结果数：{{ filteredBooks.length }}
-                            </div>
-                            <BookList :filtered-books="pagedBooks" />
+                            <BookList :filtered-books="filteredBooks" />
                             <!-- 分页控件 -->
                             <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
                                 :total="filteredBooks.length" :page-sizes="[10, 20, 50, 100]"
@@ -38,7 +34,6 @@
 
         </el-main>
         <el-footer>
-            <test />
         </el-footer>
     </el-container>
 
@@ -85,67 +80,67 @@ const currentFilter = ref<FilterParams>({
 // 分页状态
 const currentPage = ref(1)
 const pageSize = ref(20)
-
-// 处理搜索
-const handleSearch = (keyword: string, type: SearchType) => {
-    searchKeyword.value = keyword.trim()  // 增加trim处理
-    searchType.value = type
-    currentPage.value = 1
-    console.log('搜索参数:', { keyword, type })  // 调试日志
-}
-// 处理筛选
+// 在分页状态声明下方添加
 const handleFilterChange = (params: FilterParams) => {
-    currentFilter.value = params
-    currentPage.value = 1
-    
-}
-
+    currentFilter.value = params;
+    currentPage.value = 1; // 重置分页状态
+    console.log('筛选参数更新:', params);
+};
+const handleSearch = (keyword: string, type: SearchType) => {
+    searchKeyword.value = keyword.trim(); // 更新搜索关键词
+    searchType.value = type;
+    currentPage.value = 1; // 重置分页
+    if (!keyword) {
+        // 如果搜索关键词为空，显示所有书籍
+        rawBooks.value = mockBooks;
+    }
+    console.log('搜索参数:', { keyword, type });
+};
 // 综合筛选
 const filteredBooks = computed(() => {
+    if (!searchKeyword.value.trim()) {
+        return rawBooks.value; // 如果搜索关键词为空，返回所有书籍
+    }
     return rawBooks.value.filter(book => {
-        // 匹配搜索条件
-        const matchesSearch = checkSearchCondition(book)
-
-        // 匹配筛选条件
-        const matchesFilter = checkFilterCondition(book)
-
-        return matchesSearch && matchesFilter
-    })
-})
-
+        const matchesSearch = checkSearchCondition(book);
+        const matchesFilter = checkFilterCondition(book);
+        return matchesSearch && matchesFilter;
+    });
+});
 // 分页数据
 const pagedBooks = computed(() => {
     const start = (currentPage.value - 1) * pageSize.value
     return filteredBooks.value.slice(start, start + pageSize.value)
 })
-// 修改 checkSearchCondition 方法
 const checkSearchCondition = (book: Book) => {
-    const val = searchKeyword.value.trim().toLowerCase()
-    if (!val) return true // 空关键词时显示全部
+    const val = searchKeyword.value.trim().toLowerCase();
+    console.log('检查书籍:', book.title, '关键词:', val);
+    if (!val) return true; // 空关键词时显示全部
 
     switch (searchType.value) {
         case SearchType.Title:
-            return book.title.toLowerCase().includes(val)
+            return book.title.toLowerCase().includes(val);
         case SearchType.Author:
-            return book.author.toLowerCase().includes(val)
+            return book.author.toLowerCase().includes(val);
         case SearchType.ISBN:
-            return book.isbn?.replace(/-/g, '').includes(val.replace(/-/g, '')) 
+            return book.isbn?.replace(/-/g, '').includes(val.replace(/-/g, ''));
         case SearchType.ID:
-            return book.id.toString() === val
+            return book.id.toString() === val;
         default:
-            return true
+            return true;
     }
-}
-
+};
+onMounted(() => {
+    rawBooks.value = mockBooks; // 确保 mockBooks 有数据
+});
 // 完善后的筛选条件检查
 const checkFilterCondition = (book: Book) => {
-    const filter = currentFilter.value
+    const filter = currentFilter.value;
 
-    // 防御性处理空值
-    const bookYear = parseInt(book.publishData?.split('-')[0]) || 0
-    const bookMonth = parseInt(book.publishData?.split('-')[1]) || 0
-    const bookLanguage = book.language || ''
-    const bookPublisher = book.publisher || ''
+    const bookYear = parseInt(book.publishData?.split('-')[0]) || 0;
+    const bookMonth = parseInt(book.publishData?.split('-')[1]) || 0;
+    const bookLanguage = book.language || '';
+    const bookPublisher = book.publisher || '';
 
     const result =
         (filter.chineseClassification === 'ALL' ||
@@ -161,11 +156,11 @@ const checkFilterCondition = (book: Book) => {
         (!filter.status ||
             book.status === filter.status) &&
         (!filter.hasPreview ||
-            !!book.livePreview)
+            !!book.livePreview);
 
-    console.log(`[DEBUG] 图书 ${book.id} 筛选结果:`, result)
-    return result
-}
+    console.log(`[DEBUG] 图书 ${book.id} 筛选结果:`, result);
+    return result;
+};
 
 // 分页事件处理
 const handlePageChange = (newPage: number) => {
@@ -225,6 +220,10 @@ onUnmounted(() => {
 
 
 
+
+function emit(arg0: string, arg1: string, value: SearchType) {
+    throw new Error('Function not implemented.')
+}
 </script>
 
 <style scoped>
@@ -250,9 +249,6 @@ onUnmounted(() => {
     font-weight: 550;
     padding-top: 0.1rem;
 }
-
-
-
 .main-content {
     padding: 0;
     overflow: hidden;
@@ -288,7 +284,7 @@ onUnmounted(() => {
 }
 
 .header {
-    height: 4rem;
+    height: 4.5rem;
     padding: 0;
 }
 
@@ -322,15 +318,6 @@ onUnmounted(() => {
 .content-wrapper{
     margin-left: 5px;
     height: 80vh;
-}
-.debug-info {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 12px;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    z-index: 9999;
 }
 
 /* 初始动画 */
