@@ -77,7 +77,6 @@ html{
     display: flex;
     min-height: 100vh;  
     flex-direction: column;
-    padding:  0.1rem 1rem;
     margin: 0 auto;
 }
 ::-webkit-scrollbar {

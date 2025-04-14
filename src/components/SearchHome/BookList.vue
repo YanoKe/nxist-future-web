@@ -83,15 +83,12 @@ const showDetail = (book: Book) => {
 </script>
 
 <style scoped>
-.book-list-container {
-    padding: 20px;
-}
+
 
 .book-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 24px;
-    padding: 16px;
 }
 
 .book-card {

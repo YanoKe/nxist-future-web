@@ -104,12 +104,10 @@ onUnmounted(() => {
 }
 
 .box {
-    width: 100%;
-    padding: .8rem 0;
+    width: 100vw;
 }
-
 .content-wrapper {
-    max-width: 80%;
+    width: auto;
     margin: 0 auto;
 }
 

@@ -7,7 +7,7 @@ export const mockBooks: Book[] = [
         title: 'JavaScript高级程序设计',
         author: '尼古拉斯·泽卡斯',
         status: BookStatus.Available,
-        cover: '/covers/javascript.jpg',
+        cover: 'https://img1.doubanio.com/view/subject/l/public/s2768378.jpg',
         Introduction: '前端开发经典著作...',
         publishData: '2023-05',
         publisher: '人民邮电出版社',

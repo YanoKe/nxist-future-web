@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watchEffect } from 'vue'
 import { SearchType, type SearchHistory } from '@/types/book'
 import { ElMessage } from 'element-plus'
 
@@ -151,6 +151,8 @@ const handleInputBlur = () => {
         showHistory.value = false
     }, 200)
 }
+
+
 </script>
 
 <style scoped>
