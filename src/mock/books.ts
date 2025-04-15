@@ -34,7 +34,7 @@ export const mockBooks: Book[] = [
     },
     
     {
-        id: 1004,
+        id: 1003,
         title: '计算机网络',
         author: 'Andrew S.Tanenbaum',
         status: BookStatus.Available,
@@ -49,7 +49,7 @@ export const mockBooks: Book[] = [
         isbn: '978-0-13-212695-3'
     },
     {
-        id: 1006,
+        id: 1004,
         title: '编译原理',
         author: 'Alfred V.Aho',
         status: BookStatus.Available,
@@ -64,7 +64,7 @@ export const mockBooks: Book[] = [
         isbn: '978-0-201-88060-6'
     },
     {
-        id: 1007,
+        id: 1005,
         title: '数据结构与算法分析',
         author: 'Mark Allen Weiss',
         status: BookStatus.Available,
@@ -79,7 +79,7 @@ export const mockBooks: Book[] = [
         isbn: '978-0-13-284737-7'
     },
     {
-        id: 1008,
+        id: 1006,
         title: '数据库系统概论',
         author: '王珊',
         status: BookStatus.Available,
@@ -94,7 +94,7 @@ export const mockBooks: Book[] = [
         isbn: '978-7-04-049755-4'
     },
     {
-        id: 1010,
+        id: 1007,
         title: '计算机网络',
         author: 'James Kurose',
         status: BookStatus.Borrowed,
@@ -109,7 +109,7 @@ export const mockBooks: Book[] = [
         isbn: '978-0-13-409266-1'
     },
     {
-        id: 1011,
+        id: 1008,
         title: '操作系统导论',
         author: 'Andrew S.Tanenbaum',
         status: BookStatus.Available,
@@ -125,7 +125,7 @@ export const mockBooks: Book[] = [
     },
 
     {
-        id: 1013,
+        id: 1009,
         title: '数据结构与算法',
         author: 'Mark Allen Weiss',
         status: BookStatus.Borrowed,
@@ -140,7 +140,7 @@ export const mockBooks: Book[] = [
         isbn: '978-0-13-284737-7'
     },
     {
-        id: 1014,
+        id: 1010,
         title: '数据库系统概论',
         author: '王珊',
         status: BookStatus.Available,
@@ -155,7 +155,7 @@ export const mockBooks: Book[] = [
         isbn: '978-7-04-049755-4'
     },
     {
-        id: 1020,
+        id: 1011,
         title: '算法导论（原书第3版）',
         author: 'Thomas H.Cormen',
         status: BookStatus.Borrowed,
@@ -170,7 +170,7 @@ export const mockBooks: Book[] = [
         isbn: '978-0-262-03384-8'
     },
         {
-        id: 1001,
+        id: 1012,
         title: '红楼梦',
         author: '雪芹 著 / 高鹗',
         status: BookStatus.Available,
@@ -185,7 +185,7 @@ export const mockBooks: Book[] = [
         isbn: '978-7-115-12345-6'
     },
     {
-        id: 1002,
+        id: 1013,
         title: 'JavaScript高级程序设计',
         author: '[美] Nicholas C. Zakas',
         status: BookStatus.Borrowed,
@@ -201,7 +201,7 @@ export const mockBooks: Book[] = [
     },
 
     {
-        id: 1004,
+        id: 1014,
         title: '计算机网络',
         author: 'Andrew S.Tanenbaum',
         status: BookStatus.Available,
@@ -216,7 +216,7 @@ export const mockBooks: Book[] = [
         isbn: '978-0-13-212695-3'
     },
     {
-        id: 1006,
+        id: 1015,
         title: '编译原理',
         author: 'Alfred V.Aho',
         status: BookStatus.Available,
@@ -231,7 +231,7 @@ export const mockBooks: Book[] = [
         isbn: '978-0-201-88060-6'
     },
     {
-        id: 1007,
+        id: 1016,
         title: '数据结构与算法分析',
         author: 'Mark Allen Weiss',
         status: BookStatus.Available,
@@ -246,7 +246,7 @@ export const mockBooks: Book[] = [
         isbn: '978-0-13-284737-7'
     },
     {
-        id: 1008,
+        id: 1017,
         title: '数据库系统概论',
         author: '王珊',
         status: BookStatus.Available,
@@ -261,7 +261,7 @@ export const mockBooks: Book[] = [
         isbn: '978-7-04-049755-4'
     },
     {
-        id: 1010,
+        id: 1018,
         title: '计算机网络',
         author: 'James Kurose',
         status: BookStatus.Borrowed,
@@ -276,7 +276,7 @@ export const mockBooks: Book[] = [
         isbn: '978-0-13-409266-1'
     },
     {
-        id: 1011,
+        id: 1019,
         title: '操作系统导论',
         author: 'Andrew S.Tanenbaum',
         status: BookStatus.Available,
@@ -292,7 +292,7 @@ export const mockBooks: Book[] = [
     },
 
     {
-        id: 1013,
+        id: 1020,
         title: '数据结构与算法',
         author: 'Mark Allen Weiss',
         status: BookStatus.Borrowed,
@@ -307,7 +307,7 @@ export const mockBooks: Book[] = [
         isbn: '978-0-13-284737-7'
     },
     {
-        id: 1014,
+        id: 1021,
         title: '数据库系统概论',
         author: '王珊',
         status: BookStatus.Available,
@@ -322,7 +322,7 @@ export const mockBooks: Book[] = [
         isbn: '978-7-04-049755-4'
     },
     {
-        id: 1020,
+        id: 1022,
         title: '算法导论（原书第3版）',
         author: 'Thomas H.Cormen',
         status: BookStatus.Borrowed,
