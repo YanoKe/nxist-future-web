@@ -3,7 +3,6 @@
         <el-header class="header">
             <div class="header-content">
                 <schoolLogo class="logo" />
-                <!-- 添加吸附容器 -->
                 <div class="one-word-wrapper" :class="{ fixed: isSticky }">
                     <oneWord class="oneWord" />
                 </div>
