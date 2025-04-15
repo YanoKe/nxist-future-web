@@ -21,15 +21,10 @@
                         <el-main class="result-area">
                             <BookList :filtered-books="pagedBooks" />
                             <!-- 分页控件 -->
-                            <el-pagination 
-                                v-model:current-page="currentPage" 
-                                v-model:page-size="pageSize"
-                                :total="filteredBooks.length" 
-                                :page-sizes="[10, 20, 50, 100]"
-                                layout="total, sizes, prev, pager, next, jumper" 
-                                @current-change="handlePageChange"
-                                @size-change="handleSizeChange" 
-                            />
+                            <el-pagination v-model:current-page="currentPage" v-model:page-size="pageSize"
+                                :total="filteredBooks.length" :page-sizes="[10, 20, 50, 100]"
+                                layout="total, sizes, prev, pager, next, jumper" @current-change="handlePageChange"
+                                @size-change="handleSizeChange" />
                         </el-main>
                     </el-container>
                 </el-main>
@@ -141,14 +136,21 @@ onMounted(() => {
 const checkFilterCondition = (book: Book) => {
     const filter = currentFilter.value;
 
+    // 修改分类匹配条件为取首字母
+    const bookFirstChar = book.chineseClassification[0];
+
+    // 原条件：book.chineseClassification === filter.chineseClassification
+    const classificationMatch =
+        filter.chineseClassification === 'ALL' ||
+        bookFirstChar === filter.chineseClassification;
+
     const bookYear = parseInt(book.publishData?.split('-')[0]) || 0;
     const bookMonth = parseInt(book.publishData?.split('-')[1]) || 0;
     const bookLanguage = book.language || '';
     const bookPublisher = book.publisher || '';
 
     const result =
-        (filter.chineseClassification === 'ALL' ||
-            book.chineseClassification === filter.chineseClassification) &&
+        classificationMatch &&
         (filter.languages.length === 0 ||
             filter.languages.includes(bookLanguage)) &&
         (filter.publishers.length === 0 ||
@@ -253,6 +255,7 @@ function emit(arg0: string, arg1: string, value: SearchType) {
     font-weight: 550;
     padding-top: 0.1rem;
 }
+
 .main-content {
     padding: 0;
     overflow: hidden;
@@ -276,6 +279,7 @@ function emit(arg0: string, arg1: string, value: SearchType) {
     width: 100%;
     z-index: 2000;
 }
+
 .logo {
     padding: 2px;
 }
@@ -286,8 +290,8 @@ function emit(arg0: string, arg1: string, value: SearchType) {
     margin: 0 auto;
     height: 100%;
     background: rgba(255, 255, 255, 0.9);
-    border-radius: 12px; 
-    padding: 20px; 
+    border-radius: 12px;
+    padding: 20px;
 }
 
 .header {
@@ -322,7 +326,8 @@ function emit(arg0: string, arg1: string, value: SearchType) {
         }
     }
 }
-.content-wrapper{
+
+.content-wrapper {
     margin-left: 5px;
     height: auto;
 }
@@ -337,11 +342,14 @@ function emit(arg0: string, arg1: string, value: SearchType) {
 /* 浮动效果 */
 @keyframes float {
 
-    0%,50%,75%,
+    0%,
+    50%,
+    75%,
     100% {
         transform: translate(-50%);
     }
 }
+
 /* 响应式调整 */
 @media (max-width: 768px) {
     .one-word-wrapper.fixed {
