@@ -137,12 +137,12 @@ const showDetail = (book: Book) => {
 }
 .bookID{
     position: absolute;
-        top: 12px;
-        left: 12px;
+        top: 2px;
+        left: 2px;
         padding: 4px 8px;
         border-radius: 4px;
         font-size: 12px;
-        color: black;
+        color: #ff6700;
 }
 .book-info {
     padding: 16px;
@@ -185,7 +185,8 @@ const showDetail = (book: Book) => {
 .cover-column {
     .detail-cover {
         width: 100%;
-        height: 100%;
+        height: auto;
+        object-fit: cover;
         border-radius: 12px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     }
